@@ -9,7 +9,6 @@ So, as stated in the Task description, we would need to setup the `HelloWorld` S
 
 ***
 ## 1.1 Answers to the questions in the task description
-# CHANGE THESE!!!!!DSJFANFNDALKFNA
 
 **1. What is gRPC and why does it work across languages and platforms?**
 
@@ -22,10 +21,10 @@ gRPC is an open-source, high-performance Remote Procedure Call (RPC) framework d
 
 1. **Client Initialization:** The RPC client creates a stub object representing the remote service. This stub is generated from the Protobuf IDL.
 2. **Method Invocation:** The client invokes a method on the stub object, passing relevant data as arguments. This data is translated from the client's native format to Protobuf format by the generated code.
-3. **Serialization and Sending:** The serialized data is sent to the server through the chosen transport (usually HTTP/2).
+3. **Serialization and Sending:** The serialized data is sent to the server.
 4. **Server-Side Processing:** The server receives the message, deserializes it using the generated code and calls the corresponding implementation of the invoked method.
 5. **Response Processing:** The server generates a response and sends it back to the client after serialization.
-6. **Client-Side Deserialization and Data Use:** The client receives the response, deserializes it, and uses the data in its native format.
+6. **Client-Side Deserialization and Data Use:** The client receives the response, deserializes it, and uses the data.
 
 e.g. (we have a Go client there!):
 ![](https://uploads.mfellner.com/oJg92NEjR6mh.webp)
@@ -35,23 +34,21 @@ e.g. (we have a Go client there!):
 **3. Describe the workflow of Protocol Buffers?**
 
 1. **Definition:** You define data structures (messages) and services (RPC interfaces) using a `.proto` file. This file specifies field names, types, and service methods with request and response messages.
-2. **Compilation:** You compile the `.proto` file using the Protobuf compiler (`protoc`). This generates language-specific code for various languages you want to use (e.g., C++, Java, Python).
+2. **Compilation:** You compile the `.proto` file using the Protobuf compiler (`protoc`). This will generate the needed files.
 3. **Client and Server Integration:** The generated code is integrated into your client and server applications. It handles serialization/deserialization of data based on the defined message formats.
-4. **RPC Communication:** Client and server use the generated code to communicate efficiently with messages being serialized and deserialized seamlessly.
+4. **RPC Communication:** Client and server use the generated code to communicate with messages being serialized and deserialized.
 
 
 **4. What are the benefits of using Protocol Buffers?**
 
 - **Language and Platform Independence:** Enables cross-language and cross-platform communication.
 - **Compactness and Efficiency:** Serialized Protobuf messages are often smaller than alternative formats like JSON or XML, leading to faster data transfer and improved performance.
-- **Schema Validation:** Enforces data integrity and ensures clients and servers understand the expected data structure.
 - **Automatic Code Generation:** Simplifies development by generating boilerplate code for serialization/deserialization.
-- **Backward Compatibility:** Well-defined versioning mechanisms allow for compatible data exchange even with schema changes.
 
 **5. When is the use of Protocol Buffers not recommended?**
 
-- **Simple Data Structures:** For very simple data without complex structures, other formats like JSON might be easier to set up.
-- **Frequent Schema Changes:** If your data schema changes frequently, managing versioning and compatibility might become cumbersome.
+- **Simple Data Structures:** For very simple data without complex structures, other formats like JSON might be easier to handle.
+- **Frequent Schema Changes:** If your data schema changes frequently, managing versioning and compatibility might become bothersome.
 
 
 **6. List 3 different data types that can be used with Protocol Buffers:**
@@ -64,11 +61,6 @@ e.g. (we have a Go client there!):
 
 Tutorial followed: https://intuting.medium.com/implement-grpc-service-using-java-gradle-7a54258b60b8 (really old, wouldn't recommend)
 ## 1.2 Create our hello.proto file
-
-> - What is a `.proto` file?
-> The proto (Protocol Buffer) file format is a practical tool if you need to define how you want your data to be structured. It's like JSON, but smaller.
-> Such a `.proto` file has its own syntax. It also enables you to generate source code in a lot of popular languages which adapt your set structure.
-> See more: https://protobuf.dev/overview/
 
 
 To have a good data structure for our `HelloWorld` Service, we'll use the following proto file:
@@ -547,4 +539,5 @@ product_data {
 - https://grpc.io/
 - https://grpc.io/docs/languages/java/quickstart/
 - https://www.baeldung.com/google-protocol-buffer
+- https://protobuf.dev/overview/
 
