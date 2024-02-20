@@ -1,17 +1,23 @@
-
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 
 import java.io.IOException;
 
-public class HelloWorldServer {
+/**
+ * Server of the Warehouse Service
+ *
+ * @author Manuel Fellner
+ * @version 2024-02-20
+ */
+public class WarehouseServer {
+    private static final int PORT = 50022;
 
-    private static final int PORT = 50051;
     private Server server;
 
-    public void start() throws IOException {
+    public void start() throws IOException  {
+        // start the server with the given Port & service implementation
         server = ServerBuilder.forPort(PORT)
-                .addService(new HelloWorldServiceImpl())
+                .addService(new WarehouseServiceImpl())
                 .build()
                 .start();
     }
@@ -24,10 +30,9 @@ public class HelloWorldServer {
     }
 
     public static void main(String[] args) throws InterruptedException, IOException {
-        HelloWorldServer server = new HelloWorldServer();
-        System.out.println( "HelloWorld Service is running!");
+        WarehouseServer server = new WarehouseServer();
+        System.out.println("Warehouse Service is running!");
         server.start();
         server.blockUntilShutdown();
     }
-
 }

@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package warehouse;
+
+service WarehouseService  {
+  rpc getWarehouseData(WarehouseRequest) returns (WarehouseResponse) {}
+}
+
+message WarehouseRequest  {
+  string uuid = 1;
+}
+
+message WarehouseResponse {
+  string warehouse_id = 1;
+  string warehouse_name = 2;
+  string warehouse_address = 3;
+  int32 warehouse_postal_code = 4;
+  string warehouse_city = 5;
+  string warehouse_country = 6;
+  string timestamp = 7;
+
+  // -> this field type can be repeated zero or more times in a well-formed message. The order of the repeated values will be preserved.
+  repeated Product product_data = 8;
+}
+
+message Product {
+  string product_id = 1;
+  string product_name = 2;
+  string product_category = 3;
+  int32 product_quantity = 4;
+  string product_unit = 5;
+}
