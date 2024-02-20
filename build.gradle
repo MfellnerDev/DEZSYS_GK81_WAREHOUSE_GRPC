@@ -1,19 +1,69 @@
 plugins {
-    id 'java'
+    // Provide convenience executables for trying out the examples.
+    id 'application'
+    id 'com.google.protobuf' version '0.9.4'
+    // Generate IntelliJ IDEA's .idea & .iml project files
+    id 'idea'
 }
-
-group = 'org.example'
-version = '1.0-SNAPSHOT'
 
 repositories {
+    maven { // The google mirror is less flaky than mavenCentral()
+        url "https://maven-central.storage-download.googleapis.com/maven2/" }
     mavenCentral()
+    mavenLocal()
 }
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+// IMPORTANT: You probably want the non-SNAPSHOT version of gRPC. Make sure you
+// are looking at a tagged version of the example and not "master"!
+
+// Feel free to delete the comment at the next line. It is just for safely
+// updating the version in our release process.
+def grpcVersion = '1.61.1'
+def protobufVersion = '3.25.1'
+def protocVersion = protobufVersion
 
 dependencies {
-    testImplementation platform('org.junit:junit-bom:5.9.1')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
+    implementation "io.grpc:grpc-protobuf:${grpcVersion}"
+    implementation "io.grpc:grpc-services:${grpcVersion}"
+    implementation "io.grpc:grpc-stub:${grpcVersion}"
+    compileOnly "org.apache.tomcat:annotations-api:6.0.53"
+
+    // examples/advanced need this for JsonFormat
+    implementation "com.google.protobuf:protobuf-java-util:${protobufVersion}"
+
+    runtimeOnly "io.grpc:grpc-netty-shaded:${grpcVersion}"
+
+    testImplementation "io.grpc:grpc-testing:${grpcVersion}"
+    testImplementation "io.grpc:grpc-inprocess:${grpcVersion}"
+    testImplementation "junit:junit:4.13.2"
+    testImplementation "org.mockito:mockito-core:4.4.0"
 }
 
-test {
-    useJUnitPlatform()
+protobuf {
+    protoc { artifact = "com.google.protobuf:protoc:${protocVersion}" }
+    plugins {
+        grpc { artifact = "io.grpc:protoc-gen-grpc-java:${grpcVersion}" }
+    }
+    generateProtoTasks {
+        all()*.plugins { grpc {} }
+    }
+}
+
+
+
+// Note: for IntelliJ IDE to mark the generated files as source.
+sourceSets {
+    src {
+        main {
+            java {
+                srcDirs 'build/generated/source/proto/main/grpc'
+                srcDirs 'build/generated/source/proto/main/java'
+            }
+        }
+    }
 }
